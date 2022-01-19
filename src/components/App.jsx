@@ -23,12 +23,14 @@ function App() {
         <div>
             <Header />
             <CreateArea onAdd={addNote} />
-            {notes.map((note, index) =>
-                // try uuid? 
-                <Note key={index} id={index} text={note} />
-            )}
+            {
+                notes.map((note, index) =>
+                    // try uuid? 
+                    <Note key={index} id={index} text={note} />
+                )
+            }
             <Footer />
-        </div>
+        </div >
     );
 }
 
