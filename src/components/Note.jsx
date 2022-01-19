@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Note() {
+function Note(props) {
+    const { title, content } = props.text;
+
     return (
         <div className="note">
-            <h1>Title</h1>
-            <p>Write something here!</p>
+            <h1>{title}</h1>
+            <p>{content}</p>
+            <button>DELETE</button>
         </div>
     );
 }
