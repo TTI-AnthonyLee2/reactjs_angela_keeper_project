@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateArea(props) {
-    const defaultNote = { title: "", content: "" };
+    const defaultNote = { id: "", title: "", content: "" };
     const [inputNote, setInputText] = useState(defaultNote);
 
     function handleChange(event) {
-        const newValue = event.target.value;
-        const name = event.target.name;
+        const {value: newValue, name} = event.target;
+        // const newValue = event.target.value;
+        // const name = event.target.name;
 
         setInputText(prevValue => {
             return {
@@ -18,10 +20,25 @@ function CreateArea(props) {
 
     function handleSubmitted(event) {
         if (inputNote.title.length === 0 && inputNote.content.length === 0) return;
-        event.preventDefault();
-        props.onAdd(inputNote);
+        
+        const inputNoteWithUuid = {...inputNote, id: uuidv4()};
+        
+        props.onAdd(inputNoteWithUuid);
         setInputText(defaultNote);
+        event.preventDefault();
+
+        // // Failed to set id property.
+        // setInputText(prevValue => { // The state update is an asynchronous process.
+        //     return {
+        //         ...prevValue,
+        //         id: uuidv4()
+        //     };
+        // })
+        // props.onAdd(inputNote); // Here the "imputNote" hasn't been updated yet.
+        // setInputText(defaultNote);
     }
+
+    console.log("Re-rendering CreateArea.");
 
     return (
         <div>
@@ -30,7 +47,7 @@ function CreateArea(props) {
                 <textarea value={inputNote.content} onChange={handleChange} name="content" placeholder="Take a note..." rows="3" />
                 <button>Add</button>
             </form>
-        </div >
+        </div>
     );
 }
 

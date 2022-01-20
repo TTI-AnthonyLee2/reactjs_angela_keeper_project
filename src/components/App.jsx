@@ -13,24 +13,23 @@ function App() {
         })
     }
 
-    // function deleteNote(id) {
-    //     setNotes(prevNotes => {
-    //         return;
-    //     });
-    // }
+    function deleteNote(id) {
+        setNotes(prevNotes => {
+            return prevNotes.filter(note => note.id !== id);
+        });
+    }
 
     return (
         <div>
             <Header />
             <CreateArea onAdd={addNote} />
             {
-                notes.map((note, index) =>
-                    // try uuid? 
-                    <Note key={index} id={index} text={note} />
+                notes.map( note =>
+                    <Note onDelete ={deleteNote} key={note.id} id={note.id} text={note} />
                 )
             }
             <Footer />
-        </div >
+        </div>
     );
 }
 
